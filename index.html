@@ -7,64 +7,59 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* ألوان النظام - تتحكم بها من الإدارة */
-  --gold: #C9A84C;
-  --navy: #0A1628;
-  --navy-m: #162236;
-  --cream: #F5EDD6;
-  --white: #FFFFFF;
+  --gold: #C9A84C; --navy: #0A1628; --navy-m: #162236; --cream: #F5EDD6; --white: #FFFFFF;
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 body { font-family: 'Tajawal', sans-serif; background: var(--navy); color: var(--cream); min-height: 100vh; padding-bottom: 90px; }
 
-/* HEADER */
-header { position: sticky; top: 0; z-index: 100; background: rgba(10, 22, 40, 0.97); backdrop-filter: blur(15px); border-bottom: 1px solid var(--gold); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+header { position: sticky; top: 0; z-index: 100; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--gold); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 10px; }
-.brand-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
+.brand-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; background: #fff; }
 .brand-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); }
 
-/* MARKET TICKER */
-.ticker { background: var(--navy-m); padding: 8px; border-bottom: 1px solid rgba(201,168,76,0.2); font-size: 0.75rem; text-align: center; color: var(--gold); }
+.ticker { background: var(--navy-m); padding: 8px; border-bottom: 1px solid rgba(201,168,76,0.2); font-size: 0.75rem; text-align: center; color: var(--gold); font-weight: bold; }
 
-/* CATALOG GRID */
-.page { display: none; padding: 15px; }
+.page { display: none; padding: 15px; animation: fadeIn 0.3s; }
 .page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
 .catalog-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.p-card { background: var(--navy-m); border: 1px solid rgba(201,168,76,0.1); border-radius: 15px; overflow: hidden; cursor: pointer; }
+.p-img-box { aspect-ratio: 1; background: #000; position: relative; }
+.p-img-box img { width: 100%; height: 100%; object-fit: cover; }
+.p-badge { position: absolute; top: 8px; right: 8px; background: var(--gold); color: #000; padding: 2px 8px; border-radius: 5px; font-size: 0.6rem; font-weight: bold; }
+.p-info { padding: 10px; }
+.p-title { font-size: 0.85rem; font-weight: bold; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.p-price-tag { color: var(--gold); font-weight: bold; font-size: 0.9rem; margin-top: 5px; }
 
-/* PRODUCT CARD */
-.p-card { background: var(--navy-m); border: 1px solid rgba(201,168,76,0.1); border-radius: 15px; overflow: hidden; position: relative; }
-.p-img { aspect-ratio: 1; background: #000; position: relative; }
-.p-img img { width: 100%; height: 100%; object-fit: cover; }
-.p-badge { position: absolute; top: 5px; right: 5px; background: var(--gold); color: #000; padding: 2px 8px; border-radius: 5px; font-size: 0.65rem; font-weight: bold; }
-.p-body { padding: 12px; }
-.p-name { font-size: 0.85rem; font-weight: bold; color: var(--white); margin-bottom: 5px; }
-.p-meta { font-size: 0.7rem; color: rgba(245,237,214,0.6); }
-.p-price { font-weight: bold; color: var(--gold); font-size: 0.9rem; margin-top: 5px; }
+/* MODAL / POPUP */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 15px; }
+.modal-content { background: var(--navy-m); width: 100%; max-width: 450px; border-radius: 20px; border: 1px solid var(--gold); position: relative; max-height: 90vh; overflow-y: auto; }
+.slider-container { position: relative; aspect-ratio: 1; background: #000; }
+.slider-img { width: 100%; height: 100%; object-fit: contain; }
+.slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--gold); border: none; padding: 10px; cursor: pointer; font-weight: bold; }
+.btn-next { left: 0; border-radius: 0 5px 5px 0; }
+.btn-prev { right: 0; border-radius: 5px 0 0 5px; }
+.modal-details { padding: 20px; }
+.modal-price-box { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px dashed var(--gold); margin: 15px 0; font-size: 0.85rem; }
 
-/* ADMIN PANEL */
-.admin-section { background: var(--navy-m); border: 1px solid var(--gold); border-radius: 12px; padding: 15px; margin-bottom: 15px; }
-.admin-inp { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #444; background: #000; color: #fff; }
-.btn-main { width: 100%; padding: 12px; background: var(--gold); color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-.color-flex { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+/* ADMIN UI */
+.admin-box { background: var(--navy-m); border: 1px solid var(--gold); border-radius: 12px; padding: 15px; margin-bottom: 15px; }
+.inp { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #333; background: #000; color: #fff; font-family: inherit; }
+.btn-main { width: 100%; padding: 12px; background: var(--gold); color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 5px; }
 
-/* NAVIGATION */
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10, 22, 40, 0.98); border-top: 1px solid var(--gold); display: flex; z-index: 1000; }
-.nav-btn { flex: 1; padding: 15px; border: none; background: none; color: #777; cursor: pointer; font-family: inherit; }
+.nav-btn { flex: 1; padding: 15px; border: none; background: none; color: #777; cursor: pointer; font-family: inherit; font-size: 0.8rem; }
 .nav-btn.active { color: var(--gold); font-weight: bold; }
-
-/* MODAL */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
-.modal-content { background: var(--navy-m); width: 100%; max-width: 450px; border-radius: 20px; overflow: hidden; border: 1px solid var(--gold); padding: 20px; }
 </style>
 </head>
 <body>
 
-<div class="ticker" id="marketTicker">جاري جلب أسعار الذهب اللحظية...</div>
+<div class="ticker" id="goldTicker">جاري التحديث...</div>
 
 <header>
   <div class="brand">
-    <img id="logoImg" class="brand-logo" src="https://via.placeholder.com/100?text=Sarmad" alt="logo">
+    <img id="logoImg" class="brand-logo" src="https://via.placeholder.com/100?text=Logo">
     <div id="uiBrandName" class="brand-name">مجوهرات السرمد</div>
   </div>
 </header>
@@ -73,145 +68,191 @@ header { position: sticky; top: 0; z-index: 100; background: rgba(10, 22, 40, 0.
   <div class="catalog-grid" id="storeGrid"></div>
 </div>
 
-<div id="page-calc" class="page">
-  <div class="admin-section">
-    <h2 style="margin-bottom:15px; color:var(--gold);">⚖️ حاسبة الذهب الدقيقة</h2>
-    <label>اختر العيار:</label>
-    <select id="calcKarat" class="admin-inp" onchange="calculatePrice()">
-      <option value="21">عيار 21</option>
-      <option value="9">عيار 9</option>
-    </select>
-    <label>الوزن (غرام):</label>
-    <input type="number" id="calcWeight" class="admin-inp" placeholder="0.00" oninput="calculatePrice()">
-    <label>أجور الصياغة للغرام (د.ع):</label>
-    <input type="number" id="calcSiyagha" class="admin-inp" value="10000" oninput="calculatePrice()">
-    
-    <div style="background:#000; padding:20px; border-radius:10px; margin-top:20px; text-align:center; border:1px solid var(--gold);">
-      <div style="font-size:0.8rem; color:gray;">السعر الإجمالي المتوقع</div>
-      <div id="calcResult" style="font-size:1.8rem; color:var(--gold); font-weight:bold;">0 د.ع</div>
-    </div>
-  </div>
-</div>
-
 <div id="page-admin" class="page">
-  <div id="adminLogin">
-    <input type="password" id="adminPass" class="admin-inp" placeholder="رمز الدخول (1234)">
-    <button class="btn-main" onclick="login()">دخول</button>
+  <div id="adminLogin" style="text-align:center; padding-top:50px;">
+    <h2>🔐 إدارة السرمد</h2><br>
+    <input type="password" id="adminPass" class="inp" style="max-width:300px;" placeholder="رمز الدخول (1234)">
+    <button class="btn-main" style="max-width:300px;" onclick="login()">دخول</button>
   </div>
 
   <div id="adminPanel" style="display:none;">
-    <div class="admin-section">
-      <h3>🎨 هوية المحل</h3>
-      <input type="text" id="setBrandName" class="admin-inp" placeholder="اسم المحل">
-      <input type="text" id="setLogoUrl" class="admin-inp" placeholder="رابط اللوغو">
-      <div class="color-flex">
-        <label>لون ذهبي:</label> <input type="color" id="colorGold" onchange="previewTheme()">
-        <label>خلفية:</label> <input type="color" id="colorNavy" onchange="previewTheme()">
-      </div>
-      <button class="btn-main" onclick="saveSettings()">حفظ الهوية</button>
-    </div>
-
-    <div class="admin-section">
-      <h3>📈 أسعار السوق (بعقوبة/بغداد)</h3>
+    <div class="admin-box">
+      <h3>📈 أسعار السوق اليوم</h3>
       <label>سعر مثقال الذهب 21 (بيع):</label>
-      <input type="number" id="setPrice21" class="admin-inp" placeholder="مثلاً 480000">
-      <button class="btn-main" onclick="saveMarketPrice()">تحديث سعر اليوم</button>
+      <input type="number" id="setPrice21" class="inp">
+      <button class="btn-main" onclick="saveMarket()">تحديث أسعار الكتالوج</button>
     </div>
 
-    <div class="admin-section">
-      <h3>➕ إضافة منتج</h3>
-      <input type="text" id="pName" class="admin-inp" placeholder="اسم المنتج">
-      <select id="pKarat" class="admin-inp">
+    <div class="admin-box">
+      <h3>🎨 إعدادات البراند والألوان</h3>
+      <input type="text" id="setBrandName" class="inp" placeholder="اسم المحل">
+      <input type="text" id="setLogoUrl" class="inp" placeholder="رابط اللوغو">
+      <div style="display:flex; gap:10px;">
+        <label>ذهبي:</label><input type="color" id="colorGold" onchange="previewColors()">
+        <label>خلفية:</label><input type="color" id="colorNavy" onchange="previewColors()">
+      </div>
+      <button class="btn-main" onclick="saveUI()">حفظ الهوية</button>
+    </div>
+
+    <div class="admin-box">
+      <h3>➕ إضافة منتج جديد</h3>
+      <input type="text" id="pName" class="inp" placeholder="اسم القطعة">
+      <select id="pKarat" class="inp">
         <option value="21">عيار 21</option>
         <option value="9">عيار 9</option>
       </select>
-      <input type="number" id="pWeight" class="admin-inp" placeholder="الوزن">
-      <input type="number" id="pSiyagha" class="admin-inp" placeholder="أجور الصياغة للغرام">
-      <input type="text" id="pImg" class="admin-inp" placeholder="رابط الصورة">
-      <button class="btn-main" onclick="addProduct()">إضافة للمتجر</button>
+      <input type="number" id="pWeight" class="inp" placeholder="الوزن (غرام)">
+      <input type="number" id="pSiyagha" class="inp" placeholder="أجور الصياغة (للقطعة أو للغرام)">
+      <textarea id="pDesc" class="inp" style="height:80px;" placeholder="وصف القطعة (مثلاً: نقشة ليزرية، فيروزي أصلي...)"></textarea>
+      <input type="text" id="pImgs" class="inp" placeholder="رابط الصور (افصل بينهم بـ فارزة ,)">
+      <button class="btn-main" onclick="addProduct()">نشر في المحل 💍</button>
     </div>
     <div id="adminList"></div>
   </div>
 </div>
 
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="slider-container">
+      <img id="mImg" class="slider-img">
+      <button class="slide-btn btn-prev" onclick="changeSlide(-1)">❮</button>
+      <button class="slide-btn btn-next" onclick="changeSlide(1)">❯</button>
+    </div>
+    <div class="modal-details">
+      <h2 id="mTitle" style="color:var(--gold);"></h2>
+      <p id="mDesc" style="font-size:0.85rem; margin-top:10px; line-height:1.6;"></p>
+      <div class="modal-price-box">
+        <div>⚖️ عيار القطعة: <span id="mKarat"></span></div>
+        <div>⚖️ الوزن: <span id="mWeight"></span> غرام</div>
+        <hr style="opacity:0.1; margin:8px 0;">
+        <div style="font-weight:bold; font-size:1.1rem; color:var(--gold);">السعر الإجمالي: <span id="mTotal"></span> د.ع</div>
+      </div>
+      <button class="btn-main" style="background:#25D366; color:#fff;" onclick="orderWhatsApp()">اطلب عبر واتساب ✅</button>
+    </div>
+  </div>
+</div>
+
 <nav class="bottom-nav">
-  <button class="nav-btn active" onclick="showPage('store')">🏪 المتجر</button>
-  <button class="nav-btn" onclick="showPage('calc')">⚖️ الحاسبة</button>
-  <button class="nav-btn" onclick="showPage('admin')">⚙️ الإدارة</button>
+  <button class="nav-btn active" onclick="go('store')">🏪 المتجر</button>
+  <button class="nav-btn" onclick="go('admin')">⚙️ الإدارة</button>
 </nav>
 
 <script>
-// --- DATA & CONFIG ---
-let products = JSON.parse(localStorage.getItem('p_sarmad')) || [];
-let settings = JSON.parse(localStorage.getItem('s_sarmad')) || {
-  name: "مجوهرات السرمد",
-  logo: "https://via.placeholder.com/100?text=Sarmad",
-  gold: "#C9A84C",
-  navy: "#0A1628",
-  price21: 485000 // سعر المثقال الافتراضي (5 غرام)
+// --- DATA INITIALIZATION ---
+let products = JSON.parse(localStorage.getItem('sar_prods')) || [];
+let config = JSON.parse(localStorage.getItem('sar_cfg')) || {
+  name: "مجوهرات السرمد", logo: "https://via.placeholder.com/100?text=Sarmad",
+  gold: "#C9A84C", navy: "#0A1628", price21: 480000
 };
 
-// --- CALCULATIONS ---
-const getGram21 = () => settings.price21 / 5;
-const getGram9 = () => (getGram21() * (9 / 21));
+let currentModalProd = null;
+let currentSlideIdx = 0;
+
+// --- MARKET MATH ---
+const g21 = () => config.price21 / 5;
+const g9 = () => (g21() * 9 / 21);
 
 function updateTicker() {
-  const g21 = Math.round(getGram21()).toLocaleString();
-  const g9 = Math.round(getGram9()).toLocaleString();
-  document.getElementById('marketTicker').innerText = `سعر غرام الـ 21 اليوم: ${g21} د.ع | غرام الـ 9: ${g9} د.ع`;
+  document.getElementById('goldTicker').innerText = `مثقال الـ 21: ${config.price21.toLocaleString()} د.ع | غرام الـ 9: ${Math.round(g9()).toLocaleString()} د.ع`;
 }
 
-function calculatePrice() {
-  const karat = document.getElementById('calcKarat').value;
-  const weight = parseFloat(document.getElementById('calcWeight').value) || 0;
-  const siyagha = parseFloat(document.getElementById('calcSiyagha').value) || 0;
-  
-  const basePrice = (karat == "21") ? getGram21() : getGram9();
-  const total = (basePrice + siyagha) * weight;
-  
-  document.getElementById('calcResult').innerText = Math.round(total).toLocaleString() + " د.ع";
-}
-
-// --- UI LOGIC ---
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-}
-
-function applySettings() {
-  document.getElementById('uiBrandName').innerText = settings.name;
-  document.getElementById('logoImg').src = settings.logo;
-  document.documentElement.style.setProperty('--gold', settings.gold);
-  document.documentElement.style.setProperty('--navy', settings.navy);
-  document.getElementById('setBrandName').value = settings.name;
-  document.getElementById('setLogoUrl').value = settings.logo;
-  document.getElementById('colorGold').value = settings.gold;
-  document.getElementById('colorNavy').value = settings.navy;
-  document.getElementById('setPrice21').value = settings.price21;
+// --- APP LOGIC ---
+function applyUI() {
+  document.getElementById('uiBrandName').innerText = config.name;
+  document.getElementById('logoImg').src = config.logo;
+  document.documentElement.style.setProperty('--gold', config.gold);
+  document.documentElement.style.setProperty('--navy', config.navy);
+  document.getElementById('setBrandName').value = config.name;
+  document.getElementById('setLogoUrl').value = config.logo;
+  document.getElementById('colorGold').value = config.gold;
+  document.getElementById('colorNavy').value = config.navy;
+  document.getElementById('setPrice21').value = config.price21;
   updateTicker();
 }
 
-function saveSettings() {
-  settings.name = document.getElementById('setBrandName').value;
-  settings.logo = document.getElementById('setLogoUrl').value;
-  settings.gold = document.getElementById('colorGold').value;
-  settings.navy = document.getElementById('colorNavy').value;
-  localStorage.setItem('s_sarmad', JSON.stringify(settings));
-  applySettings();
-  alert("تم تحديث هوية المحل!");
+function saveUI() {
+  config.name = document.getElementById('setBrandName').value;
+  config.logo = document.getElementById('setLogoUrl').value;
+  config.gold = document.getElementById('colorGold').value;
+  config.navy = document.getElementById('colorNavy').value;
+  localStorage.setItem('sar_cfg', JSON.stringify(config));
+  applyUI();
+  alert("تم الحفظ!");
 }
 
-function saveMarketPrice() {
-  settings.price21 = parseFloat(document.getElementById('setPrice21').value);
-  localStorage.setItem('s_sarmad', JSON.stringify(settings));
-  updateTicker();
-  renderStore();
-  alert("تم تحديث أسعار السوق!");
+function previewColors() {
+  document.documentElement.style.setProperty('--gold', document.getElementById('colorGold').value);
+  document.documentElement.style.setProperty('--navy', document.getElementById('colorNavy').value);
 }
 
-// --- ADMIN & PRODUCTS ---
+function saveMarket() {
+  config.price21 = parseFloat(document.getElementById('setPrice21').value);
+  localStorage.setItem('sar_cfg', JSON.stringify(config));
+  updateTicker(); renderStore();
+  alert("تم تحديث أسعار الكتالوج بالكامل!");
+}
+
+// --- STORE & MODAL ---
+function renderStore() {
+  const grid = document.getElementById('storeGrid');
+  grid.innerHTML = products.map(p => {
+    const imgs = p.imgs.split(',');
+    const base = (p.karat == "21") ? g21() : g9();
+    const total = (base + parseFloat(p.siyagha)) * parseFloat(p.weight);
+    return `
+      <div class="p-card" onclick="openModal(${p.id})">
+        <div class="p-img-box">
+          <img src="${imgs[0]}">
+          <div class="p-badge">${p.karat}K</div>
+        </div>
+        <div class="p-info">
+          <div class="p-title">${p.name}</div>
+          <div class="p-price-tag">${Math.round(total).toLocaleString()} د.ع</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openModal(id) {
+  currentModalProd = products.find(x => x.id === id);
+  currentSlideIdx = 0;
+  const imgs = currentModalProd.imgs.split(',');
+  
+  document.getElementById('mTitle').innerText = currentModalProd.name;
+  document.getElementById('mDesc').innerText = currentModalProd.description || 'لا يوجد وصف متاح.';
+  document.getElementById('mWeight').innerText = currentModalProd.weight;
+  document.getElementById('mKarat').innerText = currentModalProd.karat + "K";
+  
+  const base = (currentModalProd.karat == "21") ? g21() : g9();
+  const total = (base + parseFloat(currentModalProd.siyagha)) * parseFloat(currentModalProd.weight);
+  document.getElementById('mTotal').innerText = Math.round(total).toLocaleString();
+  
+  updateSlider();
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function updateSlider() {
+  const imgs = currentModalProd.imgs.split(',');
+  document.getElementById('mImg').src = imgs[currentSlideIdx];
+  const btns = document.querySelectorAll('.slide-btn');
+  btns.forEach(b => b.style.display = imgs.length > 1 ? 'block' : 'none');
+}
+
+function changeSlide(step) {
+  const imgs = currentModalProd.imgs.split(',');
+  currentSlideIdx = (currentSlideIdx + step + imgs.length) % imgs.length;
+  updateSlider();
+}
+
+function orderWhatsApp() {
+  const msg = encodeURIComponent(`أهلاً مجوهرات السرمد، أريد الاستفسار عن: ${currentModalProd.name}\nالوزن: ${currentModalProd.weight} غ\nالعيار: ${currentModalProd.karat}\nرابط الصورة: ${currentModalProd.imgs.split(',')[0]}`);
+  window.open(`https://wa.me/9647713763001?text=${msg}`);
+}
+
+function closeModal(e) { if(e.target.id === 'modalOverlay') document.getElementById('modalOverlay').style.display = 'none'; }
+
+// --- ADMIN LOGIC ---
 function login() {
   if(document.getElementById('adminPass').value === '1234') {
     document.getElementById('adminLogin').style.display = 'none';
@@ -227,53 +268,38 @@ function addProduct() {
     karat: document.getElementById('pKarat').value,
     weight: document.getElementById('pWeight').value,
     siyagha: document.getElementById('pSiyagha').value,
-    img: document.getElementById('pImg').value
+    description: document.getElementById('pDesc').value,
+    imgs: document.getElementById('pImgs').value // "url1,url2,url3"
   };
   products.push(p);
-  localStorage.setItem('p_sarmad', JSON.stringify(products));
-  renderStore();
-  renderAdminList();
-}
-
-function renderStore() {
-  const grid = document.getElementById('storeGrid');
-  grid.innerHTML = products.map(p => {
-    const base = (p.karat == "21") ? getGram21() : getGram9();
-    const total = (base + parseFloat(p.siyagha)) * parseFloat(p.weight);
-    return `
-      <div class="p-card">
-        <div class="p-img">
-          <img src="${p.img}">
-          <div class="p-badge">عيار ${p.karat}</div>
-        </div>
-        <div class="p-body">
-          <div class="p-name">${p.name}</div>
-          <div class="p-meta">الوزن: ${p.weight} غ | الصياغة: ${p.siyagha}</div>
-          <div class="p-price">${Math.round(total).toLocaleString()} د.ع</div>
-        </div>
-      </div>
-    `;
-  }).join('');
+  localStorage.setItem('sar_prods', JSON.stringify(products));
+  renderStore(); renderAdminList();
+  alert("تمت الإضافة بنجاح!");
 }
 
 function renderAdminList() {
-  const list = document.getElementById('adminList');
-  list.innerHTML = products.map(p => `
+  document.getElementById('adminList').innerHTML = products.map(p => `
     <div style="background:#111; padding:10px; margin-top:5px; border-radius:8px; display:flex; justify-content:space-between;">
-      <span>${p.name} (${p.karat}K)</span>
-      <button onclick="deleteProduct(${p.id})" style="color:red; background:none; border:none;">حذف 🗑</button>
+      <span>${p.name}</span>
+      <button onclick="delProd(${p.id})" style="color:red; background:none; border:none;">حذف 🗑</button>
     </div>
   `).join('');
 }
 
-function deleteProduct(id) {
+function delProd(id) {
   products = products.filter(x => x.id !== id);
-  localStorage.setItem('p_sarmad', JSON.stringify(products));
-  renderStore();
-  renderAdminList();
+  localStorage.setItem('sar_prods', JSON.stringify(products));
+  renderStore(); renderAdminList();
 }
 
-applySettings();
+function go(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+applyUI();
 renderStore();
 </script>
 </body>
